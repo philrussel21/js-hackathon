@@ -18,10 +18,10 @@ axios.get(`https://www.balldontlie.io/api/v1/players?search=${playerFirstName}+$
       // destructures the array and assigns to variable
       const [playerData] = player
       const playerId = playerData.id
-      const playerName = `${playerFirstName} ${playerLastName}`
+      const playerName = `${playerData.first_name} ${playerData.last_name}`
       // destructures and assigns the full name of the player's team to the var
       const { full_name: playerTeam } = playerData.team
-      console.log(playerData)
+      console.log({ playerId, playerName, playerTeam })
       showPlayerStats(playerId)
     }
   }).catch((err) => {
