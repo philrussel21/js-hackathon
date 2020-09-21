@@ -1,9 +1,12 @@
 
 // should run onload to fill dropdown menu
-getAllTeams()
+// getAllTeams()
 
 // id would come from user input from dropdown menu
-getRecentGames(2)
+// getRecentGames(2)
+
+// id would come from user input from recent games dropdown menu
+getTopPerformers(123540)
 
 async function getAllTeams() {
   const response = await axios.get("https://www.balldontlie.io/api/v1/teams")
@@ -22,7 +25,7 @@ function showAllTeams(arr) {
   // TODO - Add to DOM as a dropdown menu with value as the name and id as the teamid
 }
 
-// id would come from user input from dropdown menu
+// id would come from user input from team dropdown menu
 async function getRecentGames(id) {
   // FUTURE - can also be dynamic
   const season = 2019
@@ -39,6 +42,16 @@ async function getRecentGames(id) {
 
 function showRecentGames(arr) {
   const games = []
+
+  // sorts the game in descending order to show most recent first
+  arr.sort(function (a, b) {
+    const aDate = a.date.slice(0, 10)
+    const bDate = b.date.slice(0, 10)
+    let aa = aDate.split('-').join(),
+      bb = bDate.split('-').join();
+    return aa < bb ? 1 : (aa > bb ? -1 : 0);
+  });
+
   for (let game of arr) {
     // only grabs YYYY-MM-DD from the date string
     const gameId = game.id
@@ -69,6 +82,36 @@ function setUserDate() {
   return [year, month, day].join('-');
 }
 
-async function getGameStats() {
+// id would come from user input from recent games dropdown menu
+async function getTopPerformers(id) {
+  const teamsRequest = axios.get(`https://www.balldontlie.io/api/v1/games/${id}`)
+  const statsRequest = axios.get(`https://www.balldontlie.io/api/v1/stats?game_ids[]=${id}&per_page=50`)
+  const response = await Promise.all([teamsRequest, statsRequest])
+  const [teamsResponse, statsResponse] = response
 
+  const homeTeamId = teamsResponse.data.home_team.id
+
+  // unpacks statsResponse Array data to variable gameStats
+  const { data: { data: gameStats } } = statsResponse
+
+  // assigns players to associated teams
+  const homeTeamPlayers = []
+  const awayTeamPlayers = []
+  for (let player of gameStats) {
+    player.team.id === homeTeamId ? homeTeamPlayers.push(player) : awayTeamPlayers.push(player)
+  }
+
+  showTopPerformers(homeTeamPlayers)
+  showTopPerformers(awayTeamPlayers)
+}
+
+function showTopPerformers(team) {
+  const topPerformers = {}
+  const topPoints = team.reduce((top, player) => player.pts > top.pts ? player : top, team[0])
+  const topAssists = team.reduce((top, player) => player.ast > top.ast ? player : top, team[0])
+  const topRebounds = team.reduce((top, player) => player.reb > top.reb ? player : top, team[0])
+  const topBlocks = team.reduce((top, player) => player.blk > top.blk ? player : top, team[0])
+  const topStealss = team.reduce((top, player) => player.stl > top.stl ? player : top, team[0])
+  console.log({ topPoints, topAssists, topRebounds, topBlocks, topStealss })
+  // TODO - Show to DOM on the space provided
 }
