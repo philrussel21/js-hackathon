@@ -4,29 +4,65 @@
 // DOM Selectors
 const apiCard = document.querySelector('#apiCard')
 const form = document.querySelector('form')
+const playerInput = document.querySelector('#playerInput')
 const teamsDropdown = document.querySelector('#nbaTeams')
 const gamesDropdown = document.querySelector('#recentGames')
 const qSubmitBtn = document.querySelector('#qBtn')
-
 
 // should run onload to fill dropdown menu
 window.onload = () => {
   getAllTeams()
 }
 
+// EVENT Listeners
+qSubmitBtn.addEventListener('click', (e) => {
+  e.preventDefault()
+
+  if (playerInput.value) {
+    const playerName = playerInput.value
+    getPlayerInfo(playerName)
+
+    playerInput.value = ""
+  }
+  else {
+    const teamId = teamsDropdown.value
+  }
+})
+
+playerInput.addEventListener('focus', () => {
+  teamsDropdown.disabled = true
+  gamesDropdown.disabled = true
+})
+
+playerInput.addEventListener('blur', function () {
+  if (!this.value) {
+    teamsDropdown.disabled = false
+    gamesDropdown.disabled = false
+  }
+})
+
+// TODO - accomodate to when no team is selected and league recent games is shown
+// BUG - once user selects a team, cannot change mind to query a player instead
+teamsDropdown.addEventListener('change', function () {
+  playerInput.disabled = true
+  const teamId = this.value
+  getRecentGames(teamId)
+})
+
+
 // id would come from user input from dropdown menu
-getRecentGames(2)
+// getRecentGames(2)
 
 // id would come from user input from recent games dropdown menu
-getTopPerformers(123540)
+// getTopPerformers(123540)
 
 
-// name goes here: would be coming from the player input
-const playerInput = 'andre'
+// // name goes here: would be coming from the player input
+// const playerInput = 'andre'
 
 
 // MAIN FLOW OF THE PROGRAM - to be changed when DOM is set up
-getPlayerInfo(playerInput)
+// getPlayerInfo(playerInput)
 
 // queries a certain player according to id and prints their stats accordingly
 // TODO - stats to print in DOM
@@ -139,7 +175,6 @@ async function getRecentGames(id) {
 }
 
 function showRecentGames(arr) {
-  const games = []
 
   // sorts the game in descending order to show most recent first
   arr.sort(function (a, b) {
@@ -160,10 +195,13 @@ function showRecentGames(arr) {
     const awayScore = game.visitor_team_score
 
     const dropdownString = `${gameDate} ${awayTeam} @ ${homeTeam} ${awayScore} - ${homeScore}`
-    games.push({ gameId, dropdownString })
+
+    // Add to DOM as a dropdown menu with values and id as the gameId
+    const optn = document.createElement('option')
+    optn.textContent = dropdownString
+    optn.value = gameId
+    gamesDropdown.append(optn)
   }
-  console.log(games)
-  // TODO - Add to DOM as a dropdown menu with values and id as the gameId
 }
 
 function setUserDate() {
