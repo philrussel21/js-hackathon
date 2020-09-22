@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Shanti&family=Trade+Winds&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -10,10 +11,10 @@ body {
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  background-color: #222222;
 }
 
 .main {
-  border: solid 3px black;
   margin: auto;
   height: 100vh;
   width: 80vw;
@@ -23,6 +24,14 @@ body {
       grid-template-rows: repeat(9, 11.11111%);
   -ms-grid-columns: (11.11111%)[9];
       grid-template-columns: repeat(9, 11.11111%);
+}
+
+.main-title {
+  text-align: center;
+  margin: 1rem;
+  font-family: "Trade Winds", cursive;
+  color: white;
+  font-size: 2rem;
 }
 
 #apiWindow {
@@ -41,7 +50,54 @@ body {
   height: 100%;
   width: 100%;
   padding: 2rem;
-  border: solid 1px blue;
+  -webkit-box-shadow: 0px 0px 5px 1px #adadad;
+          box-shadow: 0px 0px 5px 1px #adadad;
+  border-radius: 5px;
+  overflow-y: auto;
+  background-color: #adadad;
+}
+
+#apiWindow #apiCard .api-title {
+  text-align: center;
+  font-family: "Shanti", sans-serif;
+}
+
+#apiWindow #apiCard .form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+#apiWindow #apiCard .form .input {
+  width: 100%;
+  height: 1.5rem;
+  margin: 3px;
+  font-family: "Shanti", sans-serif;
+}
+
+#apiWindow #apiCard .form .input:hover {
+  background-color: #f7f7d9;
+}
+
+#apiWindow #apiCard .form #qBtn:hover {
+  background-color: #c4c4b5;
+}
+
+#apiWindow #apiCard ul {
+  list-style: none;
+}
+
+#apiWindow #apiCard ul li {
+  list-style: none;
 }
 
 #gameWindow {
@@ -52,7 +108,6 @@ body {
   -ms-grid-row: 1;
   -ms-grid-row-span: 6;
   grid-row: 1 / 7;
-  padding-top: 1rem;
 }
 
 #gameWindow #game {
@@ -63,6 +118,9 @@ body {
   position: relative;
   background-size: 600px 337.5px;
   background-image: url("./images/basketballcourt.jpg");
+  -webkit-box-shadow: 0px 0px 5px 1px #adadad;
+          box-shadow: 0px 0px 5px 1px #adadad;
+  border-radius: 5px;
 }
 
 #gameWindow #game #balldiv {
@@ -219,6 +277,7 @@ body {
 }
 
 #gameWindow .controlsCard {
+  margin-top: 1rem;
   width: 600px;
   height: 10%;
   padding: 2rem;
@@ -231,48 +290,56 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border: solid 1px blue;
   margin: auto;
+  background-color: #adadad;
+  -webkit-box-shadow: 0px 0px 5px 1px #adadad;
+          box-shadow: 0px 0px 5px 1px #adadad;
+  border-radius: 5px;
 }
 
 #gameWindow .controlsCard #button {
-  padding: 2px;
+  padding: 6px;
   margin: 20px;
   width: 100px;
+  -webkit-box-shadow: 0 4px gray;
+          box-shadow: 0 4px gray;
 }
 
 #infoWindow {
   -ms-grid-column: 4;
   -ms-grid-column-span: 6;
   grid-column: 4 / 10;
-  -ms-grid-row: 7;
-  -ms-grid-row-span: 3;
-  grid-row: 7 / 10;
+  -ms-grid-row: 8;
+  -ms-grid-row-span: 2;
+  grid-row: 8 / 10;
   padding: 1rem;
 }
 
 #infoWindow #infoCard {
+  width: 600px;
   height: 100%;
   margin: auto;
-  border: solid 1px blue;
+  background-color: #adadad;
+  -webkit-box-shadow: 0px 0px 5px 1px #adadad;
+          box-shadow: 0px 0px 5px 1px #adadad;
+  border-radius: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 
-#button {
-  border-radius: 50%;
-  width: 50px;
+#infoWindow #infoCard .infoTitle {
+  font-family: "Shanti", sans-serif;
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+
+#infoWindow #infoCard .instructions {
+  list-style: none;
 }
 
 #myRange {
-  width: 300px;
-  background: url("/images/bball-icon.png");
+  width: 200px;
+  background: url(./images/bball-icon.png);
 }
 /*# sourceMappingURL=styles.css.map */

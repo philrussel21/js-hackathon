@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Shanti&family=Trade+Winds&display=swap");
+// font-family: 'Audiowide', cursive;
+
+// font-family: 'Shanti', sans-serif;
+
+// font-family: 'Trade Winds', cursive;
+
 * {
   margin: 0;
   padding: 0;
@@ -8,16 +15,24 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: #222222;
 }
 
 .main {
-  border: solid 3px black;
   margin: auto;
   height: 100vh;
   width: 80vw;
   display: grid;
   grid-template-rows: repeat(9, 11.111111%);
   grid-template-columns: repeat(9, 11.111111%);
+}
+
+.main-title {
+  text-align: center;
+  margin: 1rem;
+  font-family: "Trade Winds", cursive;
+  color: white;
+  font-size: 2rem;
 }
 
 #apiWindow {
@@ -31,7 +46,41 @@ body {
     height: 100%;
     width: 100%;
     padding: 2rem;
-    border: solid 1px blue;
+    // border: solid 1px blue;
+    box-shadow: 0px 0px 5px 1px #adadad;
+    border-radius: 5px;
+    overflow-y: auto;
+    background-color: #adadad;
+    .api-title {
+      text-align: center;
+      font-family: "Shanti", sans-serif;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      .input {
+        width: 100%;
+        height: 1.5rem;
+        margin: 3px;
+        font-family: "Shanti", sans-serif;
+        &:hover {
+          background-color: #f7f7d9;
+        }
+      }
+      #qBtn {
+        &:hover {
+          background-color: #c4c4b5;
+        }
+      }
+    }
+    ul {
+      list-style: none;
+      li {
+        list-style: none;
+      }
+    }
   }
 }
 
@@ -39,7 +88,6 @@ body {
   min-width: 600px;
   grid-column: 4 / 10;
   grid-row: 1 / 7;
-  padding-top: 1rem;
   //   border: solid 1px blue;
 
   #game {
@@ -50,6 +98,8 @@ body {
     position: relative;
     background-size: 600px 337.5px;
     background-image: url("./images/basketballcourt.jpg");
+    box-shadow: 0px 0px 5px 1px #adadad;
+    border-radius: 5px;
     #balldiv {
       z-index: 1;
       height: 80px;
@@ -133,18 +183,22 @@ body {
     }
   }
   .controlsCard {
+    margin-top: 1rem;
     width: 600px;
     height: 10%;
     padding: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid 1px blue;
     margin: auto;
+    background-color: #adadad;
+    box-shadow: 0px 0px 5px 1px #adadad;
+    border-radius: 5px;
     #button {
-      padding: 2px;
+      padding: 6px;
       margin: 20px;
       width: 100px;
+      box-shadow: 0 4px gray;
     }
   }
 }
@@ -152,24 +206,57 @@ body {
 #infoWindow {
   //   border: solid 1px red;
   grid-column: 4 / 10;
-  grid-row: 7 / 10;
+  grid-row: 8 / 10;
   padding: 1rem;
   #infoCard {
+    width: 600px;
     height: 100%;
     margin: auto;
-    border: solid 1px blue;
+    background-color: #adadad;
+    box-shadow: 0px 0px 5px 1px #adadad;
+    border-radius: 5px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    .infoTitle {
+      font-family: "Shanti", sans-serif;
+      font-size: 1.5rem;
+      padding: 1rem;
+    }
+    .instructions {
+      list-style: none;
+    }
   }
 }
 
-#button {
-  border-radius: 50%;
-  width: 50px;
+#myRange {
+  width: 200px;
+  background: url(./images/bball-icon.png);
 }
 
-#myRange {
-  width: 300px;
-  background: url("/images/bball-icon.png");
-}
+// input[type="range"]::-webkit-slider-thumb {
+//   -webkit-appearance: none !important;
+//   border: 1px solid #000000;
+//   height: 36px;
+//   width: 16px;
+
+//   border-radius: 3px;
+//   background: #ffffff;
+//   cursor: pointer;
+//   margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+//   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+// }
+
+// /* All the same stuff for Firefox */
+// input[type="range"]::-moz-range-thumb {
+//   -moz-appearance: none;
+//   background-image: :url(images/bball-icon.png);
+//   cursor: pointer;
+// }
+
+// input[type="range"]::-webkit-slider-runnable-track {
+// }
+
+// input[type="range"]:focus::-webkit-slider-runnable-track {
+// }
+
+// input[type="range"]::-moz-range-track {
+// }

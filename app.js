@@ -2,142 +2,146 @@
 // 10 most recent games in the league
 
 // DOM Selectors
-const apiCard = document.querySelector('#apiCard')
-const form = document.querySelector('form')
-const playerInput = document.querySelector('#playerInput')
-const teamsDropdown = document.querySelector('#nbaTeams')
-const gamesDropdown = document.querySelector('#recentGames')
-const qSubmitBtn = document.querySelector('#qBtn')
-const qDiv = document.querySelector('#showcase')
-const qDivHeading = document.createElement('h3')
+const apiCard = document.querySelector("#apiCard");
+const form = document.querySelector("form");
+const playerInput = document.querySelector("#playerInput");
+const playerInputSeason = document.querySelector("#playerSeason");
+const teamsDropdown = document.querySelector("#nbaTeams");
+const gamesDropdown = document.querySelector("#recentGames");
+const qSubmitBtn = document.querySelector("#qBtn");
+const qDiv = document.querySelector("#showcase");
+const qDivHeading = document.createElement("h3");
 
 // should run onload to fill dropdown menu
 window.onload = () => {
-  getAllTeams()
-  gamesDropdown.disabled = true
-}
+  getAllTeams();
+  gamesDropdown.disabled = true;
+};
 
 // EVENT Listeners
-qSubmitBtn.addEventListener('click', (e) => {
-  e.preventDefault()
+qSubmitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
 
   if (playerInput.value) {
-    const playerName = playerInput.value
+    const playerName = playerInput.value;
     try {
-      getPlayerInfo(playerName)
-
+      getPlayerInfo(playerName);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
 
-    playerInput.value = ""
+    playerInput.value = "";
+  } else {
+    const gameId = gamesDropdown.value;
+    getTopPerformers(gameId);
   }
-  else {
-    const gameId = gamesDropdown.value
-    getTopPerformers(gameId)
-  }
-})
+});
 
-playerInput.addEventListener('focus', () => {
-  teamsDropdown.disabled = true
-  gamesDropdown.disabled = true
-})
+playerInput.addEventListener("focus", () => {
+  teamsDropdown.disabled = true;
+  gamesDropdown.disabled = true;
+});
 
-playerInput.addEventListener('blur', function () {
+playerInput.addEventListener("blur", function () {
   if (!this.value) {
-    teamsDropdown.disabled = false
-    gamesDropdown.disabled = false
+    teamsDropdown.disabled = false;
+    gamesDropdown.disabled = false;
   }
-})
+});
 
 // TODO - accomodate to when no team is selected and league recent games is shown
 // BUG - once user selects a team, cannot change mind to query a player instead
-teamsDropdown.addEventListener('input', function () {
-  playerInput.disabled = true
+teamsDropdown.addEventListener("input", function () {
+  playerInput.disabled = true;
 
-  const teamId = this.value
-  if (teamId > 0) gamesDropdown.disabled = false
-  getRecentGames(teamId)
-})
+  const teamId = this.value;
+  if (teamId > 0) gamesDropdown.disabled = false;
+  getRecentGames(teamId);
+});
 
 // FUNCTIONS
 function showPlayerStats(data) {
-  const { season, pts, ast, reb, blk, stl, min } = data
-  const categories = ['points', 'assists', 'rebounds', 'blocks', 'steals', 'minutes']
-  const stats = [pts, ast, reb, blk, stl, min]
+  const { season, pts, ast, reb, blk, stl, min } = data;
+  const categories = [
+    "points",
+    "assists",
+    "rebounds",
+    "blocks",
+    "steals",
+    "minutes",
+  ];
+  const stats = [pts, ast, reb, blk, stl, min];
 
   // playerStats written on DOM
-  const statsDiv = document.createElement('div')
-  const statsH4 = document.createElement('h4')
+  const statsDiv = document.createElement("div");
+  const statsH4 = document.createElement("h4");
 
-
-  statsH4.textContent = `${season} Season Average`
-  statsDiv.append(statsH4)
+  statsH4.textContent = `${season} Season Average`;
+  statsDiv.append(statsH4);
   for (let i = 0; i < categories.length; i++) {
-    const statUl = document.createElement('ul')
-    const statLi = document.createElement('li')
-    statLi.textContent = `${stats[i]} ${categories[i].capitalize()}`
-    statsDiv.append(statLi)
+    const statUl = document.createElement("ul");
+    const statLi = document.createElement("li");
+    statLi.textContent = `${stats[i]} ${categories[i].capitalize()}`;
+    statsDiv.append(statLi);
   }
 
-  qDiv.append(statsDiv)
+  qDiv.append(statsDiv);
 }
 
 function showPlayerInfo(data) {
   const playerId = data.id;
+  const playerSeason = playerInputSeason.value;
   const playerFullName = `${data.first_name} ${data.last_name}`;
   // destructures and assigns the full name of the player's team to the var
-  const { full_name: playerTeam } = data.team
-  console.log({ playerId, playerFullName, playerTeam })
+  const { full_name: playerTeam } = data.team;
+  console.log({ playerId, playerFullName, playerTeam });
 
   // playerInfo written on DOM
-  const playerDiv = document.createElement('div')
-  const playerH3 = document.createElement('h3')
-  const playerP = document.createElement('p')
+  const playerDiv = document.createElement("div");
+  const playerH3 = document.createElement("h3");
+  const playerP = document.createElement("p");
 
-  playerH3.textContent = playerFullName
-  playerP.textContent = playerTeam
-  playerDiv.append(playerH3, playerP)
+  playerH3.textContent = playerFullName;
+  playerP.textContent = playerTeam;
+  playerDiv.append(playerH3, playerP);
 
-  clearqDiv()
-  qDiv.append(playerDiv)
+  clearqDiv();
+  qDiv.append(playerDiv);
 
-  getPlayerStats(playerId)
+  getPlayerStats(playerId, playerSeason);
 }
 
 function showMultiplePlayers(arrOfPlayers) {
-  const playersDropdown = document.createElement('select')
-  const defaultOptn = document.createElement('option')
-  defaultOptn.textContent = "Select Matching Player"
-  defaultOptn.selected = true
-  defaultOptn.disabled = true
-  playersDropdown.append(defaultOptn)
+  const playersDropdown = document.createElement("select");
+  playersDropdown.classList.add("input");
+  const defaultOptn = document.createElement("option");
+  defaultOptn.textContent = "Select Matching Player";
+  defaultOptn.selected = true;
+  defaultOptn.disabled = true;
+  playersDropdown.append(defaultOptn);
 
   for (let player of arrOfPlayers.reverse()) {
-    const optn = document.createElement('option')
-    optn.textContent = `${player.first_name} ${player.last_name}`
-    playersDropdown.append(optn)
+    const optn = document.createElement("option");
+    optn.textContent = `${player.first_name} ${player.last_name}`;
+    playersDropdown.append(optn);
   }
-  form.append(playersDropdown)
-  return playersDropdown
+  form.append(playersDropdown);
+  return playersDropdown;
 }
 
 function showAllTeams(arr) {
-
   for (let team of arr) {
     // Add to DOM as a dropdown menu with value as the name and id as the teamid
-    const { full_name, id } = team
+    const { full_name, id } = team;
 
-    const optn = document.createElement('option')
-    optn.textContent = full_name
-    optn.value = id
-    teamsDropdown.append(optn)
+    const optn = document.createElement("option");
+    optn.textContent = full_name;
+    optn.value = id;
+    teamsDropdown.append(optn);
   }
-
 }
 
 function showRecentGames(arr) {
-
   // sorts the game in descending order to show most recent first
   arr.sort(function (a, b) {
     const aDate = a.date.slice(0, 10);
@@ -147,23 +151,23 @@ function showRecentGames(arr) {
     return aa < bb ? 1 : aa > bb ? -1 : 0;
   });
 
-  gamesDropdown.innerHTML = ""
+  gamesDropdown.innerHTML = "";
   for (let game of arr) {
     // only grabs YYYY-MM-DD from the date string
-    const gameId = game.id
-    const gameDate = game.date.slice(0, 10)
-    const homeTeam = game.home_team.full_name
-    const homeScore = game.home_team_score
-    const awayTeam = game.visitor_team.full_name
-    const awayScore = game.visitor_team_score
+    const gameId = game.id;
+    const gameDate = game.date.slice(0, 10);
+    const homeTeam = game.home_team.full_name;
+    const homeScore = game.home_team_score;
+    const awayTeam = game.visitor_team.full_name;
+    const awayScore = game.visitor_team_score;
 
-    const dropdownString = `${gameDate} ${awayTeam} @ ${homeTeam} ${awayScore} - ${homeScore}`
+    const dropdownString = `${gameDate} ${awayTeam} @ ${homeTeam} ${awayScore} - ${homeScore}`;
 
     // Add to DOM as a dropdown menu with values and id as the gameId
-    const optn = document.createElement('option')
-    optn.textContent = dropdownString
-    optn.value = gameId
-    gamesDropdown.append(optn)
+    const optn = document.createElement("option");
+    optn.textContent = dropdownString;
+    optn.value = gameId;
+    gamesDropdown.append(optn);
   }
 }
 
@@ -180,174 +184,207 @@ function setUserDate() {
 }
 
 function showTopPerformers(team) {
-  const topPerformers = {}
-  const topPoints = team.reduce((top, player) => player.pts > top.pts ? player : top, team[0])
-  const topAssists = team.reduce((top, player) => player.ast > top.ast ? player : top, team[0])
-  const topRebounds = team.reduce((top, player) => player.reb > top.reb ? player : top, team[0])
-  const topBlocks = team.reduce((top, player) => player.blk > top.blk ? player : top, team[0])
-  const topSteals = team.reduce((top, player) => player.stl > top.stl ? player : top, team[0])
+  const topPerformers = {};
+  const topPoints = team.reduce(
+    (top, player) => (player.pts > top.pts ? player : top),
+    team[0]
+  );
+  const topAssists = team.reduce(
+    (top, player) => (player.ast > top.ast ? player : top),
+    team[0]
+  );
+  const topRebounds = team.reduce(
+    (top, player) => (player.reb > top.reb ? player : top),
+    team[0]
+  );
+  const topBlocks = team.reduce(
+    (top, player) => (player.blk > top.blk ? player : top),
+    team[0]
+  );
+  const topSteals = team.reduce(
+    (top, player) => (player.stl > top.stl ? player : top),
+    team[0]
+  );
 
   //Show to DOM on the space provided
-  const div = document.createElement('div')
-  const teamH3 = document.createElement('h3')
+  const div = document.createElement("div");
+  const teamH3 = document.createElement("h3");
 
-  teamH3.textContent = topPoints.team.full_name
-  div.append(teamH3)
-  writeCategory(div, topPoints, "points", 'pts')
-  writeCategory(div, topAssists, "assists", 'ast')
-  writeCategory(div, topRebounds, "rebounds", 'reb')
-  writeCategory(div, topBlocks, "blocks", 'blk')
-  writeCategory(div, topSteals, "steals", 'stl')
+  teamH3.textContent = topPoints.team.full_name;
+  div.append(teamH3);
+  writeCategory(div, topPoints, "points", "pts");
+  writeCategory(div, topAssists, "assists", "ast");
+  writeCategory(div, topRebounds, "rebounds", "reb");
+  writeCategory(div, topBlocks, "blocks", "blk");
+  writeCategory(div, topSteals, "steals", "stl");
 
-  qDiv.append(div)
+  qDiv.append(div);
 }
 
 // EDIT - to be edited for better designs
 function writeCategory(cont, player, cat, attr) {
-  const ul = document.createElement('ul')
-  const li = document.createElement('li')
-  ul.textContent = cat.capitalize()
-  const { first_name, last_name } = player.player
-  li.textContent = `${first_name} ${last_name} - ${player[attr]} ${cat}`
-  cont.append(ul, li)
+  const ul = document.createElement("ul");
+  const li = document.createElement("li");
+  ul.textContent = cat.capitalize();
+  const { first_name, last_name } = player.player;
+  li.textContent = `${first_name} ${last_name} - ${player[attr]} ${cat}`;
+  cont.append(ul, li);
 }
 
 function clearqDiv() {
-  qDiv.innerHTML = ""
+  qDiv.innerHTML = "";
 }
 
 function errorMessage(msg) {
-  qDivHeading.textContent = msg
-  qDiv.append(qDivHeading)
+  qDivHeading.textContent = msg;
+  qDiv.append(qDivHeading);
 }
 
 // ASYNC FUNCTIONS - PROMISE
 // queries a certain player according to id and prints their stats accordingly
-async function getPlayerStats(id) {
+async function getPlayerStats(id, season) {
   // query can accept another parameter for season. defaults to current season as below.
   try {
-    const response = await axios.get(`https://www.balldontlie.io/api/v1/season_averages?player_ids[]=${id}`)
+    const response = await axios.get(
+      `https://www.balldontlie.io/api/v1/season_averages?season=${season}&player_ids[]=${id}`
+    );
     // stores an object that has the player's average on the given season
-    const [playerStats] = response.data.data
+    const [playerStats] = response.data.data;
 
-    showPlayerStats(playerStats)
+    showPlayerStats(playerStats);
     // const stats = { statAssists, statBlocks, statMinutes, statPoints, statRebounds, statSeason, statSteals }
     // TODO - playerStats written on DOM
   } catch (error) {
-    console.log(error)
-    errorMessage("Unavailable Stats for Selected Player")
+    console.log(error);
+    errorMessage("Unavailable Stats for Selected Player on 2019 Season");
   }
-
 }
 
 function getPlayerInfo(input) {
-  const playerName = input.trim().split(' ')
+  const playerName = input.trim().split(" ");
   // conditional assignment to variable.
-  const playerQuery = (playerName.length === 1) ? playerName[0] : `${playerName[0]}+${playerName[1]}`
-  axios.get(`https://www.balldontlie.io/api/v1/players?per_page=50&search=${playerQuery}`)
+  const playerQuery =
+    playerName.length === 1
+      ? playerName[0]
+      : `${playerName[0]}+${playerName[1]}`;
+  axios
+    .get(
+      `https://www.balldontlie.io/api/v1/players?per_page=50&search=${playerQuery}`
+    )
     .then(({ data }) => {
-      const { data: player } = data
+      const { data: player } = data;
       // if results has more than one record, create a dynamic dropdown menu consisting all of the records to
       // further filter the results
       if (player.length > 1) {
         // disableEls([playerInput, teamsDropdown])
-        playerInput.disabled = true
-        teamsDropdown.disabled = true
-        const matchingPlayersDropdown = showMultiplePlayers(player)
-        matchingPlayersDropdown.addEventListener('change', function () {
-          const chosenPlayer = this.value
-          getPlayerInfo(chosenPlayer)
-        })
+        playerInput.disabled = true;
+        teamsDropdown.disabled = true;
+        clearqDiv();
+        const matchingPlayersDropdown = showMultiplePlayers(player);
+        matchingPlayersDropdown.addEventListener("change", function () {
+          const chosenPlayer = this.value;
+          getPlayerInfo(chosenPlayer);
+        });
         // FUTURE - can be refactored to save one API call by using showPlayerInfo() and adding the id and team name with the playerName
         // getPlayerInfo(matchingNames[0])
       }
       // only one record
       else {
-
         // destructures the array and assigns to variable
-        const [playerData] = player
-        showPlayerInfo(playerData)
+        const [playerData] = player;
+        showPlayerInfo(playerData);
       }
     })
     .catch((err) => {
-      console.log(err)
-      errorMessage("Unavailable Info for Player Wanted")
-    })
+      console.log(err);
+      errorMessage("Unavailable Info for Player Wanted");
+    });
 }
 
 async function getAllTeams() {
   try {
-    const response = await axios.get("https://www.balldontlie.io/api/v1/teams")
+    const response = await axios.get("https://www.balldontlie.io/api/v1/teams");
     // unpacks response Array data to variable teams
-    const { data: { data: teams } } = response
-    showAllTeams(teams)
+    const {
+      data: { data: teams },
+    } = response;
+    showAllTeams(teams);
   } catch (error) {
-    console.log(error)
-    errorMessage("Unavailable Info to show All NBA Teams")
+    console.log(error);
+    errorMessage("Unavailable Info to show All NBA Teams");
   }
-
 }
 
 // id would come from user input from team dropdown menu
 async function getRecentGames(id) {
   try {
     // FUTURE - can also be dynamic
-    const season = 2019
+    const season = 2019;
     // grabs today's date object then converts to specified format to be used for query
-    const userDate = setUserDate()
-    const response = await axios.get(`https://www.balldontlie.io/api/v1/games?seasons[]=${season}&team_ids[]=${id}&per_page=100&end_date=${userDate}`)
+    const userDate = setUserDate();
+    const response = await axios.get(
+      `https://www.balldontlie.io/api/v1/games?seasons[]=${season}&team_ids[]=${id}&per_page=100&end_date=${userDate}`
+    );
     // unpacks response Array data to variable seasonGames
-    const { data: { data: seasonGames } } = response
+    const {
+      data: { data: seasonGames },
+    } = response;
     // extracts the last 10 recent games of the selected team
-    const teamRecentGames = seasonGames.slice(-10).reverse()
-    showRecentGames(teamRecentGames)
-
+    const teamRecentGames = seasonGames.slice(-10).reverse();
+    showRecentGames(teamRecentGames);
   } catch (error) {
-    console.log(error)
-    errorMessage("Unavailable Games for the Selected Team")
+    console.log(error);
+    errorMessage("Unavailable Games for the Selected Team");
   }
-
 }
 
 // id would come from user input from recent games dropdown menu
 async function getTopPerformers(id) {
   try {
-    const teamsRequest = axios.get(`https://www.balldontlie.io/api/v1/games/${id}`)
-    const statsRequest = axios.get(`https://www.balldontlie.io/api/v1/stats?game_ids[]=${id}&per_page=50`)
-    const response = await Promise.all([teamsRequest, statsRequest])
-    const [teamsResponse, statsResponse] = response
+    const teamsRequest = axios.get(
+      `https://www.balldontlie.io/api/v1/games/${id}`
+    );
+    const statsRequest = axios.get(
+      `https://www.balldontlie.io/api/v1/stats?game_ids[]=${id}&per_page=50`
+    );
+    const response = await Promise.all([teamsRequest, statsRequest]);
+    const [teamsResponse, statsResponse] = response;
 
-    const homeTeamId = teamsResponse.data.home_team.id
+    const homeTeamId = teamsResponse.data.home_team.id;
 
     // unpacks statsResponse Array data to variable gameStats
-    const { data: { data: gameStats } } = statsResponse
+    const {
+      data: { data: gameStats },
+    } = statsResponse;
 
     // assigns players to associated teams
-    const homeTeamPlayers = []
-    const awayTeamPlayers = []
+    const homeTeamPlayers = [];
+    const awayTeamPlayers = [];
     for (let player of gameStats) {
-      player.team.id === homeTeamId ? homeTeamPlayers.push(player) : awayTeamPlayers.push(player)
+      player.team.id === homeTeamId
+        ? homeTeamPlayers.push(player)
+        : awayTeamPlayers.push(player);
     }
-    clearqDiv()
-    showTopPerformers(homeTeamPlayers)
-    showTopPerformers(awayTeamPlayers)
+    clearqDiv();
+    showTopPerformers(homeTeamPlayers);
+    showTopPerformers(awayTeamPlayers);
   } catch (error) {
-    console.log(error)
-    errorMessage("Unavailable Information for the Selected Game")
+    console.log(error);
+    errorMessage("Unavailable Information for the Selected Game");
   }
-
 }
 
 // PROTO EXTENSIONS
 String.prototype.capitalize = function () {
-  return this.charAt(0).toUpperCase() + this.slice(1)
-}
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
 
 // GAME animation code
 
 const button = document.getElementById("button");
 const ball = document.getElementById("balldiv");
 const hoop = document.getElementById("hoopdiv");
+let score = document.getElementById("score");
 
 // initialize counter outside of function to maintain state
 let counter = 0;
@@ -358,10 +395,10 @@ let slideFunction = function () {
 
   let rangeValue = parseInt(myRange.value);
 
-  if (rangeValue < 23 && counter == 0) {
+  if (rangeValue < 30 && counter == 0) {
     let newValue = rangeValue + 1;
     myRange.value = `${newValue}`;
-  } else if (rangeValue == 23) {
+  } else if (rangeValue == 30) {
     counter++;
     let newValue = rangeValue - 1;
     myRange.value = `${newValue}`;
@@ -369,35 +406,75 @@ let slideFunction = function () {
     counter--;
     let newValue = rangeValue + 1;
     myRange.value = `${newValue}`;
-  } else if (rangeValue < 23 && counter == 1) {
+  } else if (rangeValue < 30 && counter == 1) {
     let newValue = rangeValue - 1;
     myRange.value = `${newValue}`;
   }
 };
 
+let missArray = [
+  "M100 250 C100 -110 500 19 445 120 L-100 -200",
+  "M100 250 C100 -110 500 19 445 120 L200 200",
+  "M100 250 C100 -110 500 19 445 120 C445 20 300 20 200 300",
+];
+
 // function to handle the returned range value from attempt
+
 let shotFunction = (shotValue) => {
-  if (shotValue < 15 && shotValue > 10) {
+  let currentScore = parseInt(score.textContent) || 0;
+
+  if (shotValue < 18 && shotValue > 12) {
     ball.style.offsetPath = `path("M100 250 C100 -110 500 19 454 135 V300")`;
+    currentScore++;
+    score.textContent = `${currentScore}`;
   } else {
-    ball.style.offsetPath = `path("M100 250 C100 -110 500 19 454 135 L-100 -200")`;
+    let rando = Math.floor(Math.random() * missArray.length);
+
+    ball.style.offsetPath = `path("${missArray[rando]}")`;
   }
   ball.style.animation =
     "move 1500ms forwards linear, bounce 800ms 1350ms forwards linear";
 };
 
-const game = document.getElementById("game");
-let newBall = ball.cloneNode(true);
+var intervalFunction;
+
+function aim() {
+  intervalFunction = setInterval(slideFunction, 10);
+  ball.style.animation = "none";
+}
+
+function shoot() {
+  clearInterval(intervalFunction);
+  shotFunction(myRange.value);
+}
 
 // function for mousedown and mouse up
-button.addEventListener("mousedown", function () {
-  let intervalID = setInterval(slideFunction, 10);
-  button.addEventListener("mouseup", function () {
-    clearInterval(intervalID);
-    // console.log(myRange.value);
-    shotFunction(myRange.value);
-  });
-  ball.style.animation = "none";
-});
+// button.addEventListener("mousedown", function () {
+//   intervalFunction = setInterval(slideFunction, 10);
+//   ball.style.animation = "none";
+// });
+button.addEventListener("mousedown", aim);
+
+// button.addEventListener("mouseup", function () {
+//   clearInterval(intervalFunction);
+//   shotFunction(myRange.value);
+// });
+button.addEventListener("mouseup", shoot);
 
 // function to create new element after shot
+
+// Function to use spacebar as well?
+window.addEventListener("keydown", (e) => {
+  console.log("pressed")
+  if (e.key === " ") {
+    // aim();
+    slideFunction()
+    ball.style.animation = "none";
+  }
+});
+
+window.addEventListener("keyup", (e) => {
+  if (e.key === " ") {
+    shoot();
+  }
+});

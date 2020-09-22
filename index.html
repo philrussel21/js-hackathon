@@ -1,71 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Hackathon</title>
-		<link rel="stylesheet" href="styles.css" />
-		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	</head>
-	<body>
-		<div class="main">
-			<div id="apiWindow">
-				<div id="apiCard">
-					<h2>Some meaningful title here</h2>
-					<form action="#">
-						<input
-							type="text"
-							id="playerInput"
-							placeholder="First Name then Last Name"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hackathon</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div id="apiWindow">
+        <div id="apiCard">
+          <h2 class="api-title">Get to know a player</h1>
+          <form class="form" action="#">
+            <input
+              class="input"
+              type="text"
+              id="playerInput"
+              placeholder="First Name then Last Name"
+            />
+            						<input
+							type="number"
+							id="playerSeason"
+							min="1979"
+							max="2019"
+							value="2019"
 						/>
-						<p>or</p>
-						<select name="NBATeams" id="nbaTeams">
-							<option value="0" selected>Select Team</option>
-						</select>
-						<select name="recentGames" id="recentGames">
-							<option value="0" selected>Please select certain game</option>
-						</select>
-						<input type="submit" id="qBtn" />
-					</form>
-					<div id="showcase"></div>
-				</div>
-			</div>
+          <h2 class="api-title">View Recent Team Games</h1>
+            <select name="NBATeams" id="nbaTeams" class="input">
+              <option value="0" selected>Select Team</option>
+            </select>
+            <select name="recentGames" id="recentGames" class="input">
+              <option value="0" selected>Please select certain game</option>
+            </select>
+            <input type="submit" id="qBtn" class="input" />
+          </form>
+          <div id="showcase">
+            <!-- Just a placeholder so we have a rough idea
+            of the outputs. ideally design this placeholder
+          via class then I'll add the class when creating them
+        in the DOM -->
+        <!-- Plaeholder with * are dynamic data and would change
+        depending on user input, other than that the rest are static -->
+        						<!-- placeholder -->
+						<!-- Player Input -->
+						<!-- Player basic Info div -->
+						<div>
+              <h3>*Player Name</h3>
+              <p>*Player Full Team Name</p>
+						</div>
+						<!-- Player Stats on season -->
+						<div>
+							<h4>2019 Season Average</h4>
+							<ul>Points</ul>
+							<li>*average pts</li>
+							<ul>Assists</ul>
+							<li>*average asts</li>
+							<ul>Rebounds</ul>
+							<li>*average reb</li>
+							<ul>Blocks</ul>
+							<li>*average blks</li>
+							<ul>Steals</ul>
+							<li>*average stls</li>
+							<ul>Minutes</ul>
+							<li>*average mins</li>
+						</div>
+
+						<!-- Team Input -->
+						<!-- Home Team -->
+						<div>
+							<h3>*Team Name</h3>
+							<ul>Points</ul>
+							<li>*Player Name - category</li>
+							<ul>Assists</ul>
+							<li>*Player Name - category</li>
+							<ul>Rebounds</ul>
+							<li>*Player Name - category</li>
+							<ul>Blocks</ul>
+							<li>*Player Name - category</li>
+							<ul>Steals</ul>
+							<li>*Player Name - category</li>
+						</div>
+
+						<!-- Away Team -->
+						<div>
+							<h3>*Team Name</h3>
+							<ul>Points</ul>
+							<li>*Player Name - category</li>
+							<ul>Assists</ul>
+							<li>*Player Name - category</li>
+							<ul>Rebounds</ul>
+							<li>*Player Name - category</li>
+							<ul>Blocks</ul>
+							<li>*Player Name - category</li>
+							<ul>Steals</ul>
+							<li>*Player Name - category</li>
+						</div>
+
+						
+						<!-- ends here -->
+          </div>
+        </div>
+      </div>
 
       <div id="gameWindow">
+        <h2 class="main-title">Test your basketball skills</h2>
+
         <div id="game">
           <div id="hoopdiv"></div>
 
-					<div id="balldiv">
-						<img
-							id="ball"
-							src="./images/basketball.svg"
-							alt="basketball"
-							class="ballimg"
-						/>
-					</div>
-				</div>
-				<div class="controlsCard">
-					<button id="button">button</button>
-					<div class="slidecontainer">
-						<input
-							type="range"
-							min="0"
-							max="23"
-							value="5"
-							class="slider"
-							id="myRange"
-						/>
-					</div>
-				</div>
-			</div>
+          <div id="balldiv">
+            <img
+              id="ball"
+              src="./images/basketball.svg"
+              alt="basketball"
+              class="ballimg"
+            />
+          </div>
+        </div>
+        <div class="controlsCard">
+          <button id="button">Shoot!</button>
+            <input
+              type="range"
+              min="0"
+              max="30"
+              value="5"
+              default="0"
+              class="slider"
+              id="myRange"
+            />
+            <h1>Score:<span id="score">0</span></h1>
+        </div>
+      </div>
 
-			<div id="infoWindow">
-				<div id="infoCard">
-					<h1>Info Card</h1>
-				</div>
-			</div>
-		</div>
+      <div id="infoWindow">
+        <div id="infoCard">
 
-		<script src="app.js"></script>
-	</body>
+          <h2 class="infoTitle">Instructions:</h2>
+          <ul>
+            <li class="instructions"><span>EASY MODE:</span> Press and Hold Space Bar to move the slider to make a shot</li>
+            <li class="instructions"><span>HARD MODE:</span> Click and Hold the "Shoot" button to move the slider to make a shot</li>
+            <li class="instructions"></li>
+          </ul>
+          <h2 class="infoTitle">About</h2>
+          <p>Long Shot is an interactive addicting game designed for basketball fans.
+	The goal of the game is to score as much as you can. The app also has a side-feature
+	to bring you the season average of your favourite player or view top performers of your favourite team.
+	Bring up the stats of your favourite player or favourite team and try to outscore them!
+</p>
+<ul>Created by:
+	<a href="#">Rob's Links</a>
+	<a href="#">Phil's Links</a>
+	<a href="#">API Link</a>
+</ul>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
 </html>
