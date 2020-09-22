@@ -71,27 +71,49 @@ teamsDropdown.addEventListener('change', function () {
 
 // queries a certain player according to id and prints their stats accordingly
 // TODO - stats to print in DOM
-async function showPlayerStats(id) {
+async function getPlayerStats(id) {
   // query can accept another parameter for season. defaults to current season as below.
   try {
     const response = await axios.get(`https://www.balldontlie.io/api/v1/season_averages?player_ids[]=${id}`)
     // stores an object that has the player's average on the given season
     const [playerStats] = response.data.data
 
-    // can also use destructuring but for readability decided to use declaration instead
-    const statSeason = playerStats.season
-    const statPoints = playerStats.pts
-    const statAssists = playerStats.ast
-    const statRebounds = playerStats.reb
-    const statBlocks = playerStats.blk
-    const statSteals = playerStats.stl
-    const statMinutes = playerStats.min
-    console.log({ statAssists, statBlocks, statMinutes, statPoints, statRebounds, statSeason, statSteals })
+    showPlayerStats(playerStats)
+    // const stats = { statAssists, statBlocks, statMinutes, statPoints, statRebounds, statSeason, statSteals }
     // TODO - playerStats written on DOM
   } catch (error) {
     console.log('Unavailable Data for selected player')
   }
 
+}
+
+function showPlayerStats(data) {
+  // const statSeason = data.season
+  // const statPoints = data.pts
+  // const statAssists = data.ast
+  // const statRebounds = data.reb
+  // const statBlocks = data.blk
+  // const statSteals = data.stl
+  // const statMinutes = data.min
+  const { season, pts, ast, reb, blk, stl, min } = data
+  const categories = ['points', 'assists', 'rebounds', 'blocks', 'steals', 'minutes']
+  const stats = [pts, ast, reb, blk, stl, min]
+
+  // playerStats written on DOM
+  const statsDiv = document.createElement('div')
+  const statsH4 = document.createElement('h4')
+
+
+  statsH4.textContent = `${season} Season Average`
+  statsDiv.append(statsH4)
+  for (let i = 0; i < categories.length; i++) {
+    const statUl = document.createElement('ul')
+    const statLi = document.createElement('li')
+    statLi.textContent = `${stats[i]} ${categories[i].capitalize()}`
+    statsDiv.append(statLi)
+  }
+
+  qDiv.append(statsDiv)
 }
 
 function showPlayerInfo(data) {
@@ -100,9 +122,18 @@ function showPlayerInfo(data) {
   // destructures and assigns the full name of the player's team to the var
   const { full_name: playerTeam } = data.team
   console.log({ playerId, playerFullName, playerTeam })
-  // TODO - playerInfo written on DOM
 
-  showPlayerStats(playerId)
+  // playerInfo written on DOM
+  const playerDiv = document.createElement('div')
+  const playerH3 = document.createElement('h3')
+  const playerP = document.createElement('p')
+
+  playerH3.textContent = playerFullName
+  playerP.textContent = playerTeam
+  playerDiv.append(playerH3, playerP)
+  qDiv.append(playerDiv)
+
+  getPlayerStats(playerId)
 }
 
 function getPlayerInfo(input) {
@@ -115,14 +146,11 @@ function getPlayerInfo(input) {
       // if results has more than one record, create a dynamic dropdown menu consisting all of the records to
       // further filter the results
       if (player.length > 1) {
-        console.log(data)
-        const matchingNames = []
-
-        for (let rec of player) {
-          const playerFullName = `${rec.first_name} ${rec.last_name}`
-          matchingNames.push(playerFullName)
-        }
-        console.log(matchingNames)
+        const matchingPlayersDropdown = showMultiplePlayers(player)
+        matchingPlayersDropdown.addEventListener('change', function () {
+          const chosenPlayer = this.value
+          getPlayerInfo(chosenPlayer)
+        })
         // TODO - matchingNames to be shown to user as dropdown menu, then the selected playerName
         // would be passed as the argument in the function below.
         // FUTURE - can be refactored to save one API call by using showPlayerInfo() and adding the id and team name with the playerName
@@ -131,8 +159,6 @@ function getPlayerInfo(input) {
       }
       // only one record
       else {
-        // logs an array of player data
-        console.log('only one player')
 
         // destructures the array and assigns to variable
         const [playerData] = player
@@ -141,6 +167,23 @@ function getPlayerInfo(input) {
     }).catch((err) => {
       console.log(err)
     });
+}
+
+function showMultiplePlayers(arrOfPlayers) {
+  const playersDropdown = document.createElement('select')
+  const defaultOptn = document.createElement('option')
+  defaultOptn.textContent = "Select Matching Player"
+  defaultOptn.selected = true
+  defaultOptn.disabled = true
+  playersDropdown.append(defaultOptn)
+
+  for (let player of arrOfPlayers.reverse()) {
+    const optn = document.createElement('option')
+    optn.textContent = `${player.first_name} ${player.last_name}`
+    playersDropdown.append(optn)
+  }
+  qDiv.append(playersDropdown)
+  return playersDropdown
 }
 
 async function getAllTeams() {
@@ -268,6 +311,7 @@ function showTopPerformers(team) {
   qDiv.append(div)
 }
 
+// EDIT - to be edited for better designs
 function writeCategory(cont, player, cat, attr) {
   const ul = document.createElement('ul')
   const li = document.createElement('li')
