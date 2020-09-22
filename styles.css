@@ -61,6 +61,160 @@ body {
   height: 337.5px;
   padding: 2rem;
   border: solid 1px blue;
+  position: relative;
+}
+
+#gameWindow #game #balldiv {
+  z-index: 1;
+  height: 80px;
+  width: 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  offset-path: path("M100 250 C10-100 300 19 340 190 V300");
+  top: 0px;
+  left: 0px;
+  -webkit-animation: none;
+          animation: none;
+  position: absolute;
+  border-radius: 50%;
+}
+
+#gameWindow #game #ball {
+  height: 36px;
+  width: 36px;
+  position: absolute;
+  background-color: red;
+  border-radius: 50%;
+}
+
+#gameWindow #game #hoopdiv {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  top: 100px;
+  left: 500px;
+  height: 80px;
+  width: 80px;
+  z-index: 0;
+}
+
+#gameWindow #game #hoopimg {
+  height: 35px;
+  width: 45px;
+}
+
+@-webkit-keyframes none {
+  100% {
+    offset-distance: 0%;
+  }
+}
+
+@keyframes none {
+  100% {
+    offset-distance: 0%;
+  }
+}
+
+@-webkit-keyframes move {
+  0% {
+    offset-distance: 0%;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  80% {
+    -webkit-transform: rotate(-1480deg) scale(0.7);
+            transform: rotate(-1480deg) scale(0.7);
+  }
+  100% {
+    offset-distance: 100%;
+    -webkit-transform: rotate(-1580deg) scale(0.7);
+            transform: rotate(-1580deg) scale(0.7);
+  }
+}
+
+@keyframes move {
+  0% {
+    offset-distance: 0%;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  80% {
+    -webkit-transform: rotate(-1480deg) scale(0.7);
+            transform: rotate(-1480deg) scale(0.7);
+  }
+  100% {
+    offset-distance: 100%;
+    -webkit-transform: rotate(-1580deg) scale(0.7);
+            transform: rotate(-1580deg) scale(0.7);
+  }
+}
+
+@-webkit-keyframes bounce {
+  0%,
+  40%,
+  70%,
+  85%,
+  100% {
+    -webkit-transform: translateX(0) scale(0.7);
+            transform: translateX(0) scale(0.7);
+  }
+  20% {
+    -webkit-transform: translateX(-50px) scale(0.7);
+            transform: translateX(-50px) scale(0.7);
+  }
+  60% {
+    -webkit-transform: translateX(-35px) scale(0.7);
+            transform: translateX(-35px) scale(0.7);
+  }
+  90% {
+    -webkit-transform: translateX(-5px) scale(0.7);
+            transform: translateX(-5px) scale(0.7);
+  }
+  95% {
+    -webkit-transform: translateX(-2px) scale(0.7);
+            transform: translateX(-2px) scale(0.7);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  40%,
+  70%,
+  85%,
+  100% {
+    -webkit-transform: translateX(0) scale(0.7);
+            transform: translateX(0) scale(0.7);
+  }
+  20% {
+    -webkit-transform: translateX(-50px) scale(0.7);
+            transform: translateX(-50px) scale(0.7);
+  }
+  60% {
+    -webkit-transform: translateX(-35px) scale(0.7);
+            transform: translateX(-35px) scale(0.7);
+  }
+  90% {
+    -webkit-transform: translateX(-5px) scale(0.7);
+            transform: translateX(-5px) scale(0.7);
+  }
+  95% {
+    -webkit-transform: translateX(-2px) scale(0.7);
+            transform: translateX(-2px) scale(0.7);
+  }
 }
 
 #gameWindow .controlsCard {
@@ -78,6 +232,12 @@ body {
           align-items: center;
   border: solid 1px blue;
   margin: auto;
+}
+
+#gameWindow .controlsCard #button {
+  padding: 2px;
+  margin: 20px;
+  width: 100px;
 }
 
 #infoWindow {
