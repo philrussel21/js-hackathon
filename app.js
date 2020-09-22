@@ -271,9 +271,9 @@ let slideFunction = function () {
 // function to handle the returned range value from attempt
 let shotFunction = (shotValue) => {
   if (shotValue < 15 && shotValue > 10) {
-    ball.style.offsetPath = `path("M100 250 C100 -110 500 19 540 140 V300")`;
+    ball.style.offsetPath = `path("M100 250 C100 -110 500 19 454 135 V300")`;
   } else {
-    ball.style.offsetPath = `path("M100 250 C100 -110 500 19 540 140 L-100 -200")`;
+    ball.style.offsetPath = `path("M100 250 C100 -110 500 19 454 135 L-100 -200")`;
   }
   ball.style.animation =
     "move 1500ms forwards linear, bounce 800ms 1350ms forwards linear";
@@ -289,7 +289,6 @@ button.addEventListener("mousedown", function () {
     clearInterval(intervalID);
     // console.log(myRange.value);
     shotFunction(myRange.value);
-    ball = newBall;
   });
   ball.style.animation = "none";
 });

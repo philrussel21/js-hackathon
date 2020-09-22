@@ -61,6 +61,7 @@ body {
   height: 337.5px;
   padding: 2rem;
   position: relative;
+  background-size: 600px 337.5px;
   background-image: url("./images/basketballcourt.jpg");
 }
 
@@ -105,8 +106,8 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  top: 100px;
-  left: 500px;
+  top: 95px;
+  left: 414px;
   height: 80px;
   width: 80px;
   z-index: 0;
