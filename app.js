@@ -1,6 +1,18 @@
+// TODO - when no Team input is selected, recent games should show
+// 10 most recent games in the league
+
+// DOM Selectors
+const apiCard = document.querySelector('#apiCard')
+const form = document.querySelector('form')
+const teamsDropdown = document.querySelector('#nbaTeams')
+const gamesDropdown = document.querySelector('#recentGames')
+const qSubmitBtn = document.querySelector('#qBtn')
+
 
 // should run onload to fill dropdown menu
-getAllTeams()
+window.onload = () => {
+  getAllTeams()
+}
 
 // id would come from user input from dropdown menu
 getRecentGames(2)
@@ -98,13 +110,17 @@ async function getAllTeams() {
 }
 
 function showAllTeams(arr) {
-  const teams = []
+
   for (let team of arr) {
+    // Add to DOM as a dropdown menu with value as the name and id as the teamid
     const { full_name, id } = team
-    teams.push({ full_name, id })
+
+    const optn = document.createElement('option')
+    optn.textContent = full_name
+    optn.value = id
+    teamsDropdown.append(optn)
   }
-  console.log(teams)
-  // TODO - Add to DOM as a dropdown menu with value as the name and id as the teamid
+
 }
 
 // id would come from user input from team dropdown menu
