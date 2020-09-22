@@ -60,8 +60,8 @@ body {
   width: 600px;
   height: 337.5px;
   padding: 2rem;
-  border: solid 1px blue;
   position: relative;
+  background-image: url("./images/basketballcourt.jpg");
 }
 
 #gameWindow #game #balldiv {
@@ -266,6 +266,12 @@ body {
 }
 
 #button {
-  border-radius: 10%;
+  border-radius: 50%;
+  width: 50px;
+}
+
+#myRange {
+  width: 300px;
+  background: url("/images/bball-icon.png");
 }
 /*# sourceMappingURL=styles.css.map */

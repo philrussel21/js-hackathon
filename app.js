@@ -236,15 +236,16 @@ function showTopPerformers(team) {
   // TODO - Show to DOM on the space provided
 }
 
-    // GAME animation code
+// GAME animation code
 
 const button = document.getElementById("button");
 const ball = document.getElementById("balldiv");
 const hoop = document.getElementById("hoopdiv");
 
-    // initialize counter outside of function to maintain state
+// initialize counter outside of function to maintain state
 let counter = 0;
 
+// function for range to create auto motion
 let slideFunction = function () {
   let myRange = document.getElementById("myRange");
 
@@ -267,8 +268,9 @@ let slideFunction = function () {
   }
 };
 
-let shotFunction = (x) => {
-  if (x < 15 && x > 10) {
+// function to handle the returned range value from attempt
+let shotFunction = (shotValue) => {
+  if (shotValue < 15 && shotValue > 10) {
     ball.style.offsetPath = `path("M100 250 C100 -110 500 19 540 140 V300")`;
   } else {
     ball.style.offsetPath = `path("M100 250 C100 -110 500 19 540 140 L-100 -200")`;
@@ -277,11 +279,19 @@ let shotFunction = (x) => {
     "move 1500ms forwards linear, bounce 800ms 1350ms forwards linear";
 };
 
+const game = document.getElementById("game");
+let newBall = ball.cloneNode(true);
+
+// function for mousedown and mouse up
 button.addEventListener("mousedown", function () {
-  let intervalID = setInterval(slideFunction, 100);
+  let intervalID = setInterval(slideFunction, 10);
   button.addEventListener("mouseup", function () {
     clearInterval(intervalID);
-    console.log(myRange.value);
+    // console.log(myRange.value);
     shotFunction(myRange.value);
+    ball = newBall;
   });
+  ball.style.animation = "none";
 });
+
+// function to create new element after shot
