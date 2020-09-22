@@ -84,8 +84,8 @@ function showPlayerStats(data) {
 }
 
 function showPlayerInfo(data) {
-  const playerId = data.id
-  const playerFullName = `${data.first_name} ${data.last_name}`
+  const playerId = data.id;
+  const playerFullName = `${data.first_name} ${data.last_name}`;
   // destructures and assigns the full name of the player's team to the var
   const { full_name: playerTeam } = data.team
   console.log({ playerId, playerFullName, playerTeam })
@@ -140,11 +140,11 @@ function showRecentGames(arr) {
 
   // sorts the game in descending order to show most recent first
   arr.sort(function (a, b) {
-    const aDate = a.date.slice(0, 10)
-    const bDate = b.date.slice(0, 10)
-    let aa = aDate.split('-').join(),
-      bb = bDate.split('-').join();
-    return aa < bb ? 1 : (aa > bb ? -1 : 0);
+    const aDate = a.date.slice(0, 10);
+    const bDate = b.date.slice(0, 10);
+    let aa = aDate.split("-").join(),
+      bb = bDate.split("-").join();
+    return aa < bb ? 1 : aa > bb ? -1 : 0;
   });
 
   gamesDropdown.innerHTML = ""
@@ -169,16 +169,14 @@ function showRecentGames(arr) {
 
 function setUserDate() {
   let d = new Date(),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
     year = d.getFullYear();
 
-  if (month.length < 2)
-    month = '0' + month;
-  if (day.length < 2)
-    day = '0' + day;
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
 
-  return [year, month, day].join('-');
+  return [year, month, day].join("-");
 }
 
 function showTopPerformers(team) {
@@ -345,3 +343,62 @@ String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1)
 }
 
+// GAME animation code
+
+const button = document.getElementById("button");
+const ball = document.getElementById("balldiv");
+const hoop = document.getElementById("hoopdiv");
+
+// initialize counter outside of function to maintain state
+let counter = 0;
+
+// function for range to create auto motion
+let slideFunction = function () {
+  let myRange = document.getElementById("myRange");
+
+  let rangeValue = parseInt(myRange.value);
+
+  if (rangeValue < 23 && counter == 0) {
+    let newValue = rangeValue + 1;
+    myRange.value = `${newValue}`;
+  } else if (rangeValue == 23) {
+    counter++;
+    let newValue = rangeValue - 1;
+    myRange.value = `${newValue}`;
+  } else if (rangeValue == 0) {
+    counter--;
+    let newValue = rangeValue + 1;
+    myRange.value = `${newValue}`;
+  } else if (rangeValue < 23 && counter == 1) {
+    let newValue = rangeValue - 1;
+    myRange.value = `${newValue}`;
+  }
+};
+
+// function to handle the returned range value from attempt
+let shotFunction = (shotValue) => {
+  if (shotValue < 15 && shotValue > 10) {
+    ball.style.offsetPath = `path("M100 250 C100 -110 500 19 540 140 V300")`;
+  } else {
+    ball.style.offsetPath = `path("M100 250 C100 -110 500 19 540 140 L-100 -200")`;
+  }
+  ball.style.animation =
+    "move 1500ms forwards linear, bounce 800ms 1350ms forwards linear";
+};
+
+const game = document.getElementById("game");
+let newBall = ball.cloneNode(true);
+
+// function for mousedown and mouse up
+button.addEventListener("mousedown", function () {
+  let intervalID = setInterval(slideFunction, 10);
+  button.addEventListener("mouseup", function () {
+    clearInterval(intervalID);
+    // console.log(myRange.value);
+    shotFunction(myRange.value);
+    ball = newBall;
+  });
+  ball.style.animation = "none";
+});
+
+// function to create new element after shot

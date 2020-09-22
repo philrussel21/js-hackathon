@@ -40,14 +40,96 @@ body {
   grid-column: 4 / 10;
   grid-row: 1 / 7;
   padding-top: 1rem;
-//   border: solid 1px blue;
+  //   border: solid 1px blue;
 
   #game {
     margin: auto;
     width: 600px;
     height: 337.5px;
     padding: 2rem;
-    border: solid 1px blue;
+    position: relative;
+    background-image: url("./images/basketballcourt.jpg");
+    #balldiv {
+      z-index: 1;
+      height: 80px;
+      width: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      offset-path: path("M100 250 C10-100 300 19 340 190 V300");
+      top: 0px;
+      left: 0px;
+      animation: none;
+      position: absolute;
+      border-radius: 50%;
+      // border: solid 1px red;
+    }
+    #ball {
+      height: 36px;
+      width: 36px;
+      position: absolute;
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    #hoopdiv {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: 100px;
+      left: 500px;
+      height: 80px;
+      width: 80px;
+      z-index: 0;
+      // border: solid 1px red;
+    }
+    #hoopimg {
+      height: 35px;
+      width: 45px;
+    }
+
+    @keyframes none {
+      100% {
+        offset-distance: 0%;
+      }
+    }
+
+    @keyframes move {
+      0% {
+        offset-distance: 0%;
+        transform: rotate(0deg);
+      }
+      80% {
+        transform: rotate(-1480deg) scale(0.7);
+      }
+      100% {
+        offset-distance: 100%;
+        transform: rotate(-1580deg) scale(0.7);
+      }
+    }
+
+    @keyframes bounce {
+      0%,
+      40%,
+      70%,
+      85%,
+      100% {
+        transform: translateX(0) scale(0.7);
+      }
+      20% {
+        transform: translateX(-50px) scale(0.7);
+      }
+      60% {
+        transform: translateX(-35px) scale(0.7);
+      }
+      90% {
+        transform: translateX(-5px) scale(0.7);
+      }
+      95% {
+        transform: translateX(-2px) scale(0.7);
+      }
+    }
   }
   .controlsCard {
     width: 600px;
@@ -58,6 +140,11 @@ body {
     align-items: center;
     border: solid 1px blue;
     margin: auto;
+    #button {
+      padding: 2px;
+      margin: 20px;
+      width: 100px;
+    }
   }
 }
 
@@ -74,4 +161,14 @@ body {
     justify-content: center;
     align-items: center;
   }
+}
+
+#button {
+  border-radius: 50%;
+  width: 50px;
+}
+
+#myRange {
+  width: 300px;
+  background: url("/images/bball-icon.png");
 }
