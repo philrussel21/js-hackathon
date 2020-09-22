@@ -8,10 +8,12 @@ const playerInput = document.querySelector('#playerInput')
 const teamsDropdown = document.querySelector('#nbaTeams')
 const gamesDropdown = document.querySelector('#recentGames')
 const qSubmitBtn = document.querySelector('#qBtn')
+const qDiv = document.querySelector('#showcase')
 
 // should run onload to fill dropdown menu
 window.onload = () => {
   getAllTeams()
+  gamesDropdown.disabled = true
 }
 
 // EVENT Listeners
@@ -25,7 +27,8 @@ qSubmitBtn.addEventListener('click', (e) => {
     playerInput.value = ""
   }
   else {
-    const teamId = teamsDropdown.value
+    const gameId = gamesDropdown.value
+    getTopPerformers(gameId)
   }
 })
 
@@ -45,7 +48,9 @@ playerInput.addEventListener('blur', function () {
 // BUG - once user selects a team, cannot change mind to query a player instead
 teamsDropdown.addEventListener('change', function () {
   playerInput.disabled = true
+
   const teamId = this.value
+  if (teamId > 0) gamesDropdown.disabled = false
   getRecentGames(teamId)
 })
 
@@ -247,7 +252,31 @@ function showTopPerformers(team) {
   const topAssists = team.reduce((top, player) => player.ast > top.ast ? player : top, team[0])
   const topRebounds = team.reduce((top, player) => player.reb > top.reb ? player : top, team[0])
   const topBlocks = team.reduce((top, player) => player.blk > top.blk ? player : top, team[0])
-  const topStealss = team.reduce((top, player) => player.stl > top.stl ? player : top, team[0])
-  console.log({ topPoints, topAssists, topRebounds, topBlocks, topStealss })
+  const topSteals = team.reduce((top, player) => player.stl > top.stl ? player : top, team[0])
+  console.log({ topPoints, topAssists, topRebounds, topBlocks, topSteals })
   // TODO - Show to DOM on the space provided
+  const div = document.createElement('div')
+  const teamH3 = document.createElement('h3')
+
+  teamH3.textContent = topPoints.team.full_name
+  div.append(teamH3)
+  writeCategory(div, topPoints, "points", 'pts')
+  writeCategory(div, topAssists, "assists", 'ast')
+  writeCategory(div, topRebounds, "rebounds", 'reb')
+  writeCategory(div, topBlocks, "blocks", 'blk')
+  writeCategory(div, topSteals, "steals", 'stl')
+  qDiv.append(div)
+}
+
+function writeCategory(cont, player, cat, attr) {
+  const ul = document.createElement('ul')
+  const li = document.createElement('li')
+  ul.textContent = cat.capitalize()
+  const { first_name, last_name } = player.player
+  li.textContent = `${first_name} ${last_name} - ${player[attr]} ${cat}`
+  cont.append(ul, li)
+}
+
+String.prototype.capitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1)
 }
