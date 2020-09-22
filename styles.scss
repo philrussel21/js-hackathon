@@ -1,0 +1,77 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main {
+  border: solid 3px black;
+  margin: auto;
+  height: 100vh;
+  width: 80vw;
+  display: grid;
+  grid-template-rows: repeat(9, 11.111111%);
+  grid-template-columns: repeat(9, 11.111111%);
+}
+
+#apiWindow {
+  height: 100%;
+  width: 100%;
+  grid-column: 1 / 4;
+  grid-row: 1 / 10;
+  padding: 1rem;
+  //   border: solid 1px red;
+  #apiCard {
+    height: 100%;
+    width: 100%;
+    padding: 2rem;
+    border: solid 1px blue;
+  }
+}
+
+#gameWindow {
+  min-width: 600px;
+  grid-column: 4 / 10;
+  grid-row: 1 / 7;
+  padding-top: 1rem;
+//   border: solid 1px blue;
+
+  #game {
+    margin: auto;
+    width: 600px;
+    height: 337.5px;
+    padding: 2rem;
+    border: solid 1px blue;
+  }
+  .controlsCard {
+    width: 600px;
+    height: 10%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px blue;
+    margin: auto;
+  }
+}
+
+#infoWindow {
+  //   border: solid 1px red;
+  grid-column: 4 / 10;
+  grid-row: 7 / 10;
+  padding: 1rem;
+  #infoCard {
+    height: 100%;
+    margin: auto;
+    border: solid 1px blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

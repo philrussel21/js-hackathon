@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.main {
+  border: solid 3px black;
+  margin: auto;
+  height: 100vh;
+  width: 80vw;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (11.11111%)[9];
+      grid-template-rows: repeat(9, 11.11111%);
+  -ms-grid-columns: (11.11111%)[9];
+      grid-template-columns: repeat(9, 11.11111%);
+}
+
+#apiWindow {
+  height: 100%;
+  width: 100%;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1 / 4;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 9;
+  grid-row: 1 / 10;
+  padding: 1rem;
+}
+
+#apiWindow #apiCard {
+  height: 100%;
+  width: 100%;
+  padding: 2rem;
+  border: solid 1px blue;
+}
+
+#gameWindow {
+  min-width: 600px;
+  -ms-grid-column: 4;
+  -ms-grid-column-span: 6;
+  grid-column: 4 / 10;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 6;
+  grid-row: 1 / 7;
+  padding-top: 1rem;
+}
+
+#gameWindow #game {
+  margin: auto;
+  width: 600px;
+  height: 337.5px;
+  padding: 2rem;
+  border: solid 1px blue;
+}
+
+#gameWindow .controlsCard {
+  width: 600px;
+  height: 10%;
+  padding: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: solid 1px blue;
+  margin: auto;
+}
+
+#infoWindow {
+  -ms-grid-column: 4;
+  -ms-grid-column-span: 6;
+  grid-column: 4 / 10;
+  -ms-grid-row: 7;
+  -ms-grid-row-span: 3;
+  grid-row: 7 / 10;
+  padding: 1rem;
+}
+
+#infoWindow #infoCard {
+  height: 100%;
+  margin: auto;
+  border: solid 1px blue;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+/*# sourceMappingURL=styles.css.map */
