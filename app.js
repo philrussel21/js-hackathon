@@ -236,25 +236,52 @@ function showTopPerformers(team) {
   // TODO - Show to DOM on the space provided
 }
 
-// GAME animation code
+    // GAME animation code
 
 const button = document.getElementById("button");
 const ball = document.getElementById("balldiv");
 const hoop = document.getElementById("hoopdiv");
 
-button.addEventListener("click", () => {
-  let rando = Math.floor(Math.random() * 4);
-  let goal = "V300";
-  let misses = [
-    "L-300 -200",
-    "C340 -100 250 250 250 300",
-    "C340 -100 270 300 270 300",
-    "C340 -150 450 250 450 300",
-    "L500 -300",
-  ];
+    // initialize counter outside of function to maintain state
+let counter = 0;
 
-  ball.style.offsetPath = `path("M100 250 C100 -110 500 19 540 140 ${goal}")`;
+let slideFunction = function () {
+  let myRange = document.getElementById("myRange");
 
+  let rangeValue = parseInt(myRange.value);
+
+  if (rangeValue < 23 && counter == 0) {
+    let newValue = rangeValue + 1;
+    myRange.value = `${newValue}`;
+  } else if (rangeValue == 23) {
+    counter++;
+    let newValue = rangeValue - 1;
+    myRange.value = `${newValue}`;
+  } else if (rangeValue == 0) {
+    counter--;
+    let newValue = rangeValue + 1;
+    myRange.value = `${newValue}`;
+  } else if (rangeValue < 23 && counter == 1) {
+    let newValue = rangeValue - 1;
+    myRange.value = `${newValue}`;
+  }
+};
+
+let shotFunction = (x) => {
+  if (x < 15 && x > 10) {
+    ball.style.offsetPath = `path("M100 250 C100 -110 500 19 540 140 V300")`;
+  } else {
+    ball.style.offsetPath = `path("M100 250 C100 -110 500 19 540 140 L-100 -200")`;
+  }
   ball.style.animation =
     "move 1500ms forwards linear, bounce 800ms 1350ms forwards linear";
+};
+
+button.addEventListener("mousedown", function () {
+  let intervalID = setInterval(slideFunction, 100);
+  button.addEventListener("mouseup", function () {
+    clearInterval(intervalID);
+    console.log(myRange.value);
+    shotFunction(myRange.value);
+  });
 });
