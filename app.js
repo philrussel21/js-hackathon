@@ -94,7 +94,6 @@ function showPlayerInfo(data) {
   const playerFullName = `${data.first_name} ${data.last_name}`;
   // destructures and assigns the full name of the player's team to the var
   const { full_name: playerTeam } = data.team;
-  console.log({ playerId, playerFullName, playerTeam });
 
   // playerInfo written on DOM
   const playerDiv = document.createElement("div");
@@ -183,7 +182,7 @@ function setUserDate() {
   return [year, month, day].join("-");
 }
 
-function showTopPerformers(team) {
+function showTopPerformers(team, score) {
   const topPerformers = {};
   const topPoints = team.reduce(
     (top, player) => (player.pts > top.pts ? player : top),
@@ -209,8 +208,7 @@ function showTopPerformers(team) {
   //Show to DOM on the space provided
   const div = document.createElement("div");
   const teamH3 = document.createElement("h3");
-
-  teamH3.textContent = topPoints.team.full_name;
+  teamH3.textContent = `${topPoints.team.full_name} - ${score}`;
   div.append(teamH3);
   writeCategory(div, topPoints, "points", "pts");
   writeCategory(div, topAssists, "assists", "ast");
@@ -279,6 +277,7 @@ function getPlayerInfo(input) {
         // disableEls([playerInput, teamsDropdown])
         playerInput.disabled = true;
         teamsDropdown.disabled = true;
+        qSubmitBtn.disabled = true;
         clearqDiv();
         const matchingPlayersDropdown = showMultiplePlayers(player);
         matchingPlayersDropdown.addEventListener("change", function () {
@@ -351,6 +350,8 @@ async function getTopPerformers(id) {
     const [teamsResponse, statsResponse] = response;
 
     const homeTeamId = teamsResponse.data.home_team.id;
+    const homeScore = teamsResponse.data.home_team_score
+    const awayScore = teamsResponse.data.visitor_team_score
 
     // unpacks statsResponse Array data to variable gameStats
     const {
@@ -366,8 +367,8 @@ async function getTopPerformers(id) {
         : awayTeamPlayers.push(player);
     }
     clearqDiv();
-    showTopPerformers(homeTeamPlayers);
-    showTopPerformers(awayTeamPlayers);
+    showTopPerformers(homeTeamPlayers, homeScore);
+    showTopPerformers(awayTeamPlayers, awayScore);
   } catch (error) {
     console.log(error);
     errorMessage("Unavailable Information for the Selected Game");

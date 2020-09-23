@@ -29,7 +29,7 @@ body {
 .main-title {
   text-align: center;
   margin: 1rem;
-  font-family: "Trade Winds", cursive;
+  font-family: 'Trade Winds', cursive;
   color: white;
   font-size: 2rem;
 }
@@ -59,7 +59,7 @@ body {
 
 #apiWindow #apiCard .api-title {
   text-align: center;
-  font-family: "Shanti", sans-serif;
+  font-family: 'Shanti', sans-serif;
 }
 
 #apiWindow #apiCard .form {
@@ -81,7 +81,7 @@ body {
   width: 100%;
   height: 1.5rem;
   margin: 3px;
-  font-family: "Shanti", sans-serif;
+  font-family: 'Shanti', sans-serif;
 }
 
 #apiWindow #apiCard .form .input:hover {
@@ -309,9 +309,9 @@ body {
   -ms-grid-column: 4;
   -ms-grid-column-span: 6;
   grid-column: 4 / 10;
-  -ms-grid-row: 8;
-  -ms-grid-row-span: 2;
-  grid-row: 8 / 10;
+  -ms-grid-row: 6;
+  -ms-grid-row-span: 4;
+  grid-row: 6 / 10;
   padding: 1rem;
 }
 
@@ -326,16 +326,82 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 #infoWindow #infoCard .infoTitle {
-  font-family: "Shanti", sans-serif;
+  font-family: 'Shanti', sans-serif;
   font-size: 1.5rem;
   padding: 1rem;
 }
 
 #infoWindow #infoCard .instructions {
   list-style: none;
+  padding: 0.2rem;
+}
+
+#infoWindow #infoCard span {
+  border-radius: 5px;
+  display: inline-block;
+  padding: 0.2rem;
+  width: 7rem;
+}
+
+#infoWindow #infoCard .easyMode {
+  background-color: lime;
+}
+
+#infoWindow #infoCard .hardMode {
+  background-color: red;
+  color: white;
+}
+
+#infoWindow #infoCard .aboutCont {
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  line-height: 1.6rem;
+}
+
+#infoWindow #infoCard .devCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  padding: 1rem;
+}
+
+#infoWindow #infoCard .devLinks {
+  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#infoWindow #infoCard .devLinks a {
+  margin: auto;
+}
+
+#infoWindow #infoCard .githubsvg {
+  height: 3rem;
+  width: 3rem;
+  -webkit-transition: -webkit-transform 0.3s linear;
+  transition: -webkit-transform 0.3s linear;
+  transition: transform 0.3s linear;
+  transition: transform 0.3s linear, -webkit-transform 0.3s linear;
+}
+
+#infoWindow #infoCard .githubsvg:hover {
+  fill: white;
+  -webkit-transform: translateY(-10px);
+          transform: translateY(-10px);
 }
 
 #myRange {
