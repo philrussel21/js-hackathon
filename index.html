@@ -13,19 +13,22 @@
         <div id="apiCard">
           <h2 class="api-title">Get to know a player</h1>
           <form class="form" action="#">
+            <div class="playerAndNameDiv">
             <input
               class="input"
               type="text"
               id="playerInput"
               placeholder="First Name then Last Name"
             />
-            						<input
+                        <input
+                        class="input"
 							type="number"
 							id="playerSeason"
 							min="1979"
 							max="2019"
 							value="2019"
-						/>
+            />
+          </div>
           <h2 class="api-title">View Recent Team Games</h1>
             <select name="NBATeams" id="nbaTeams" class="input">
               <option value="0" selected>Select Team</option>
@@ -36,91 +39,28 @@
             <input type="submit" id="qBtn" class="input" />
           </form>
           <div id="showcase">
-            <!-- Just a placeholder so we have a rough idea
-            of the outputs. ideally design this placeholder
-          via class then I'll add the class when creating them
-        in the DOM -->
-        <!-- Plaeholder with * are dynamic data and would change
-        depending on user input, other than that the rest are static -->
-        						<!-- placeholder -->
-						<!-- Player Input -->
-						<!-- Player basic Info div -->
-						<div>
-              <h3>*Player Name</h3>
-              <p>*Player Full Team Name</p>
-						</div>
-						<!-- Player Stats on season -->
-						<div>
-							<h4>2019 Season Average</h4>
-							<ul>Points</ul>
-							<li>*average pts</li>
-							<ul>Assists</ul>
-							<li>*average asts</li>
-							<ul>Rebounds</ul>
-							<li>*average reb</li>
-							<ul>Blocks</ul>
-							<li>*average blks</li>
-							<ul>Steals</ul>
-							<li>*average stls</li>
-							<ul>Minutes</ul>
-							<li>*average mins</li>
-						</div>
-
-						<!-- Team Input -->
-						<!-- Home Team -->
-						<div>
-							<h3>*Team Name</h3>
-							<ul>Points</ul>
-							<li>*Player Name - category</li>
-							<ul>Assists</ul>
-							<li>*Player Name - category</li>
-							<ul>Rebounds</ul>
-							<li>*Player Name - category</li>
-							<ul>Blocks</ul>
-							<li>*Player Name - category</li>
-							<ul>Steals</ul>
-							<li>*Player Name - category</li>
-						</div>
-
-						<!-- Away Team -->
-						<div>
-							<h3>*Team Name</h3>
-							<ul>Points</ul>
-							<li>*Player Name - category</li>
-							<ul>Assists</ul>
-							<li>*Player Name - category</li>
-							<ul>Rebounds</ul>
-							<li>*Player Name - category</li>
-							<ul>Blocks</ul>
-							<li>*Player Name - category</li>
-							<ul>Steals</ul>
-							<li>*Player Name - category</li>
-						</div>
-
-						
-						<!-- ends here -->
           </div>
         </div>
       </div>
 
       <div id="gameWindow">
-        <h2 class="main-title">Test your basketball skills</h2>
-
+        <h2 class="main-title">Longshot</h2>
         <div id="game">
           <div id="hoopdiv"></div>
-
           <div id="balldiv">
             <img
               id="ball"
               src="./images/basketball.svg"
               alt="basketball"
               class="ballimg"
-            />
+            />   
           </div>
+          
         </div>
         <div class="controlsCard">
           <button id="button">Shoot!</button>
-            <input
+            <div class="range-container">  
+          <input
               type="range"
               min="0"
               max="30"
@@ -129,7 +69,8 @@
               class="slider"
               id="myRange"
             />
-            <h1>Score:<span id="score">0</span></h1>
+          </div>
+            <div class="score-container"><h1 class="score-title">Score:<span id="score">0</span></h1></div>
         </div>
       </div>
 
@@ -145,7 +86,7 @@
           <h2 class="infoTitle">About</h2>
           <p class="aboutCont">Long Shot is an interactive addicting game designed for basketball fans.
 	The goal of the game is to score as much as you can. The app also has a side-feature
-	to bring you the season average of your favourite player or view top performers of your favourite team.
+	to bring you the season average of your favourite player or view top performers of your favourite team on a certain game.
 	Bring up the stats of your favourite player or favourite team and try to outscore them!
 </p>
 <nav class="devCont">
