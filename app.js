@@ -77,6 +77,7 @@ function showPlayerStats(data) {
   const statsH4 = document.createElement("h4");
 
   statsH4.textContent = `${season} Season Average`;
+  statsDiv.classList.add("seasonAverageDiv");
   statsDiv.append(statsH4);
   for (let i = 0; i < categories.length; i++) {
     const statUl = document.createElement("ul");
@@ -94,13 +95,13 @@ function showPlayerInfo(data) {
   const playerFullName = `${data.first_name} ${data.last_name}`;
   // destructures and assigns the full name of the player's team to the var
   const { full_name: playerTeam } = data.team;
-  console.log({ playerId, playerFullName, playerTeam });
 
   // playerInfo written on DOM
   const playerDiv = document.createElement("div");
   const playerH3 = document.createElement("h3");
   const playerP = document.createElement("p");
 
+  playerDiv.classList.add("showPlayerDiv");
   playerH3.textContent = playerFullName;
   playerP.textContent = playerTeam;
   playerDiv.append(playerH3, playerP);
@@ -183,7 +184,7 @@ function setUserDate() {
   return [year, month, day].join("-");
 }
 
-function showTopPerformers(team) {
+function showTopPerformers(team, score) {
   const topPerformers = {};
   const topPoints = team.reduce(
     (top, player) => (player.pts > top.pts ? player : top),
@@ -209,8 +210,8 @@ function showTopPerformers(team) {
   //Show to DOM on the space provided
   const div = document.createElement("div");
   const teamH3 = document.createElement("h3");
-
-  teamH3.textContent = topPoints.team.full_name;
+  teamH3.textContent = `${topPoints.team.full_name} - ${score}`;
+  div.classList.add("teamLeadersDiv");
   div.append(teamH3);
   writeCategory(div, topPoints, "points", "pts");
   writeCategory(div, topAssists, "assists", "ast");
@@ -245,6 +246,7 @@ function errorMessage(msg) {
 async function getPlayerStats(id, season) {
   // query can accept another parameter for season. defaults to current season as below.
   try {
+    if (!season) season = 2019;
     const response = await axios.get(
       `https://www.balldontlie.io/api/v1/season_averages?season=${season}&player_ids[]=${id}`
     );
@@ -256,7 +258,7 @@ async function getPlayerStats(id, season) {
     // TODO - playerStats written on DOM
   } catch (error) {
     console.log(error);
-    errorMessage("Unavailable Stats for Selected Player on 2019 Season");
+    errorMessage(`Unavailable Stats for Selected Player on ${season} Season`);
   }
 }
 
@@ -279,6 +281,7 @@ function getPlayerInfo(input) {
         // disableEls([playerInput, teamsDropdown])
         playerInput.disabled = true;
         teamsDropdown.disabled = true;
+        qSubmitBtn.disabled = true;
         clearqDiv();
         const matchingPlayersDropdown = showMultiplePlayers(player);
         matchingPlayersDropdown.addEventListener("change", function () {
@@ -351,6 +354,9 @@ async function getTopPerformers(id) {
     const [teamsResponse, statsResponse] = response;
 
     const homeTeamId = teamsResponse.data.home_team.id;
+    const homeScore = teamsResponse.data.home_team_score;
+    const awayScore = teamsResponse.data.visitor_team_score;
+    console.log(homeScore,awayScore)
 
     // unpacks statsResponse Array data to variable gameStats
     const {
@@ -366,8 +372,8 @@ async function getTopPerformers(id) {
         : awayTeamPlayers.push(player);
     }
     clearqDiv();
-    showTopPerformers(homeTeamPlayers);
-    showTopPerformers(awayTeamPlayers);
+    showTopPerformers(homeTeamPlayers, homeScore);
+    showTopPerformers(awayTeamPlayers, awayScore);
   } catch (error) {
     console.log(error);
     errorMessage("Unavailable Information for the Selected Game");
@@ -433,13 +439,17 @@ let shotFunction = (shotValue) => {
     ball.style.offsetPath = `path("${missArray[rando]}")`;
   }
   ball.style.animation =
-    "move 1500ms forwards linear, bounce 800ms 1350ms forwards linear";
+    "move 1300ms forwards linear, bounce 400ms 1200ms forwards linear";
 };
 
 var intervalFunction;
+let slideSpeed = function () {
+  console.log(parseInt(score.textContent));
+  return 50 / parseInt(score.textContent / 5 + 1);
+};
 
 function aim() {
-  intervalFunction = setInterval(slideFunction, 10);
+  intervalFunction = setInterval(slideFunction, slideSpeed());
   ball.style.animation = "none";
 }
 
@@ -465,10 +475,10 @@ button.addEventListener("mouseup", shoot);
 
 // Function to use spacebar as well?
 window.addEventListener("keydown", (e) => {
-  console.log("pressed")
+  console.log("pressed");
   if (e.key === " ") {
     // aim();
-    slideFunction()
+    slideFunction();
     ball.style.animation = "none";
   }
 });

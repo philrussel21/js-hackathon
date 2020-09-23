@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Shanti&family=Trade+Winds&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -12,6 +13,7 @@ body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   background-color: #222222;
+  font-family: "Shanti", sans-serif;
 }
 
 .main {
@@ -20,8 +22,8 @@ body {
   width: 80vw;
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: (11.11111%)[9];
-      grid-template-rows: repeat(9, 11.11111%);
+  -ms-grid-rows: auto;
+      grid-template-rows: auto;
   -ms-grid-columns: (11.11111%)[9];
       grid-template-columns: repeat(9, 11.11111%);
 }
@@ -30,7 +32,7 @@ body {
   text-align: center;
   margin: 1rem;
   font-family: "Trade Winds", cursive;
-  color: white;
+  color: #fef1f1;
   font-size: 2rem;
 }
 
@@ -44,22 +46,24 @@ body {
   -ms-grid-row-span: 9;
   grid-row: 1 / 10;
   padding: 1rem;
+  font-family: "Shanti", sans-serif;
 }
 
 #apiWindow #apiCard {
   height: 100%;
   width: 100%;
   padding: 2rem;
-  -webkit-box-shadow: 0px 0px 5px 1px #adadad;
-          box-shadow: 0px 0px 5px 1px #adadad;
+  -webkit-box-shadow: 0px 0px 5px 1px #ffffff;
+          box-shadow: 0px 0px 5px 1px #ffffff;
   border-radius: 5px;
   overflow-y: auto;
-  background-color: #adadad;
+  background-color: #fef1f1;
+  overflow-x: hidden;
 }
 
 #apiWindow #apiCard .api-title {
   text-align: center;
-  font-family: "Shanti", sans-serif;
+  font-family: "Orbitron", sans-serif;
 }
 
 #apiWindow #apiCard .form {
@@ -79,25 +83,72 @@ body {
 
 #apiWindow #apiCard .form .input {
   width: 100%;
-  height: 1.5rem;
+  height: 2rem;
   margin: 3px;
   font-family: "Shanti", sans-serif;
+  border-radius: 5px;
+  outline: none;
 }
 
 #apiWindow #apiCard .form .input:hover {
-  background-color: #f7f7d9;
+  background-color: #0e3749;
+  color: white;
+}
+
+#apiWindow #apiCard .form .playerAndNameDiv {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+#apiWindow #apiCard .form #playerSeason {
+  width: 50px;
+  text-align: center;
 }
 
 #apiWindow #apiCard .form #qBtn:hover {
   background-color: #c4c4b5;
 }
 
-#apiWindow #apiCard ul {
-  list-style: none;
+#apiWindow #apiCard .showPlayerDiv {
+  padding: 1rem;
+  text-align: center;
+  -webkit-box-shadow: 0px 0px 5px 1px #8c8c8c;
+          box-shadow: 0px 0px 5px 1px #8c8c8c;
+  border-radius: 5px;
+  margin-top: 2rem;
 }
 
-#apiWindow #apiCard ul li {
+#apiWindow #apiCard .seasonAverageDiv {
+  padding: 0.5rem;
+  text-align: center;
+  -webkit-box-shadow: 0px 0px 5px 1px #8c8c8c;
+          box-shadow: 0px 0px 5px 1px #8c8c8c;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+#apiWindow #apiCard .teamLeadersDiv {
+  padding: 0.5rem;
+  text-align: center;
+  -webkit-box-shadow: 0px 0px 5px 1px #8c8c8c;
+          box-shadow: 0px 0px 5px 1px #8c8c8c;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+#apiWindow #apiCard ul {
   list-style: none;
+  padding: 3px;
+}
+
+#apiWindow #apiCard li {
+  list-style: none;
+  color: #982c31;
+  margin-left: 10px;
 }
 
 #gameWindow {
@@ -118,8 +169,8 @@ body {
   position: relative;
   background-size: 600px 337.5px;
   background-image: url("./images/basketballcourt.jpg");
-  -webkit-box-shadow: 0px 0px 5px 1px #adadad;
-          box-shadow: 0px 0px 5px 1px #adadad;
+  -webkit-box-shadow: 0px 0px 5px 1px #ffffff;
+          box-shadow: 0px 0px 5px 1px #ffffff;
   border-radius: 5px;
 }
 
@@ -284,34 +335,66 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto;
+  background-color: #ffffff00;
+  color: white;
+}
+
+#gameWindow .controlsCard .range-container {
+  -webkit-box-shadow: 0px 0px 5px 1px #222222;
+          box-shadow: 0px 0px 5px 1px #222222;
+  border-radius: 20px;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: auto;
-  background-color: #adadad;
-  -webkit-box-shadow: 0px 0px 5px 1px #adadad;
-          box-shadow: 0px 0px 5px 1px #adadad;
+  background: red;
+  background: -webkit-gradient(linear, left top, right top, from(red), color-stop(50%, #7adbff), to(red));
+  background: linear-gradient(90deg, red 0%, #7adbff 50%, red 100%);
+}
+
+#gameWindow .controlsCard .score-container {
+  padding: 3px;
+  -webkit-box-shadow: 0px 0px 5px 1px #222222;
+          box-shadow: 0px 0px 5px 1px #222222;
   border-radius: 5px;
 }
 
+#gameWindow .controlsCard .score-title {
+  font-family: "Audiowide", cursive;
+  font-size: 1.5rem;
+}
+
 #gameWindow .controlsCard #button {
-  padding: 6px;
+  font-size: 1rem;
+  padding: 10px 15px;
   margin: 20px;
   width: 100px;
-  -webkit-box-shadow: 0 4px gray;
-          box-shadow: 0 4px gray;
+  border-radius: 10px;
+  color: white;
+  text-transform: uppercase;
+  background-color: #0e3749;
+  -webkit-box-shadow: 0 4px #222222;
+          box-shadow: 0 4px #222222;
 }
 
 #infoWindow {
   -ms-grid-column: 4;
   -ms-grid-column-span: 6;
   grid-column: 4 / 10;
-  -ms-grid-row: 8;
-  -ms-grid-row-span: 2;
-  grid-row: 8 / 10;
+  grid-row: 5 / "";
   padding: 1rem;
 }
 
@@ -319,13 +402,17 @@ body {
   width: 600px;
   height: 100%;
   margin: auto;
-  background-color: #adadad;
+  background-color: #fef1f1;
   -webkit-box-shadow: 0px 0px 5px 1px #adadad;
           box-shadow: 0px 0px 5px 1px #adadad;
   border-radius: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 #infoWindow #infoCard .infoTitle {
@@ -336,6 +423,68 @@ body {
 
 #infoWindow #infoCard .instructions {
   list-style: none;
+  padding: 0.2rem;
+}
+
+#infoWindow #infoCard span {
+  border-radius: 5px;
+  display: inline-block;
+  padding: 0.2rem;
+  width: 7rem;
+}
+
+#infoWindow #infoCard .easyMode {
+  background-color: lime;
+}
+
+#infoWindow #infoCard .hardMode {
+  background-color: red;
+  color: white;
+}
+
+#infoWindow #infoCard .aboutCont {
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  line-height: 1.6rem;
+}
+
+#infoWindow #infoCard .devCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  padding: 1rem;
+}
+
+#infoWindow #infoCard .devLinks {
+  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#infoWindow #infoCard .devLinks a {
+  margin: auto;
+}
+
+#infoWindow #infoCard .githubsvg {
+  width: 48px;
+  height: 48px;
+  -webkit-transition: -webkit-transform 0.3s linear;
+  transition: -webkit-transform 0.3s linear;
+  transition: transform 0.3s linear;
+  transition: transform 0.3s linear, -webkit-transform 0.3s linear;
+}
+
+#infoWindow #infoCard .githubsvg:hover {
+  fill: #adadad;
+  -webkit-transform: translateY(-10px);
+          transform: translateY(-10px);
 }
 
 #myRange {
