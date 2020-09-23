@@ -22,8 +22,8 @@ body {
   width: 80vw;
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: auto;
-      grid-template-rows: auto;
+  -ms-grid-rows: (11.11111%)[9];
+      grid-template-rows: repeat(9, 11.11111%);
   -ms-grid-columns: (11.11111%)[9];
       grid-template-columns: repeat(9, 11.11111%);
 }
@@ -394,12 +394,14 @@ body {
   -ms-grid-column: 4;
   -ms-grid-column-span: 6;
   grid-column: 4 / 10;
-  grid-row: 5 / '';
+  -ms-grid-row: 6;
+  -ms-grid-row-span: 4;
+  grid-row: 6 / 10;
   padding: 1rem;
 }
 
 #infoWindow #infoCard {
-  width: 600px;
+  width: 700px;
   height: 100%;
   margin: auto;
   background-color: #fef1f1;
@@ -418,7 +420,7 @@ body {
 #infoWindow #infoCard .infoTitle {
   font-family: 'Shanti', sans-serif;
   font-size: 1.5rem;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 #infoWindow #infoCard .instructions {
